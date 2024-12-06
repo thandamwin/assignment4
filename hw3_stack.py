@@ -2,6 +2,15 @@ from aws_cdk import Stack, RemovalPolicy
 from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_dynamodb as dynamodb
 from constructs import Construct
+from aws_cdk import (
+    aws_sns as sns,
+    aws_sqs as sqs,
+    aws_sns_subscriptions as subs,
+    aws_s3_notifications as s3n,
+    aws_lambda as _lambda,
+    aws_iam as iam,
+    aws_dynamodb as ddb
+)
 
 class ResourcesStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
@@ -14,6 +23,21 @@ class ResourcesStack(Stack):
             bucket_name="cdk-tmw-testbucket",  # Updated unique name
             removal_policy=RemovalPolicy.DESTROY  # Use RETAIN for production
         )
+
+        # Create an SNS topic
+        sns_topic = sns.Topic(self, "SNSTopic")
+
+        # Create SQS queues
+        size_tracking_queue = sqs.Queue(self, "SizeTrackingQueue")
+        logging_queue = sqs.Queue(self, "LoggingQueue")
+
+        # Subscribe SQS queues to the SNS topic
+        sns_topic.add_subscription(subs.SqsSubscription(size_tracking_queue))
+        sns_topic.add_subscription(subs.SqsSubscription(logging_queue))
+
+        # Configure S3 bucket to send events to the SNS topic
+        s3_bucket.add_event_notification(s3.EventType.OBJECT_CREATED_PUT, s3n.SnsDestination(sns_topic))
+        s3_bucket.add_event_notification(s3.EventType.OBJECT_REMOVED_DELETE, s3n.SnsDestination(sns_topic))
 
         # Create the DynamoDB table with a unique name
         dynamodb_table = dynamodb.Table(

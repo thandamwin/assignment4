@@ -19,7 +19,7 @@
         "notificationArns": [],
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fdbf238b8f2267e36fb72bd6bce4acc1832c566a61325305e082e4940037e1c8.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/167925edfb0ef48fe59ea76a86d7d40632a9203337cd35f0eda6c166faa2d2fd.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -194,6 +194,486 @@
         ]
       },
       "displayName": "PlottingLambdaStack"
+    },
+    "SizeTrackingLambdaStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SizeTrackingLambdaStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "SizeTrackingLambdaStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "SizeTrackingLambdaStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "notificationArns": [],
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9eb33bd1fd61b873e131f5a6e4bb04c4c6bbcc57f19b98ec6ab3e55bf03ac104.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "SizeTrackingLambdaStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "SizeTrackingLambdaStack.assets"
+      ],
+      "metadata": {
+        "/SizeTrackingLambdaStack/SizeTrackingLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingLambdaServiceRoleEE707D62"
+          }
+        ],
+        "/SizeTrackingLambdaStack/SizeTrackingLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingLambdaServiceRoleDefaultPolicy725C3475"
+          }
+        ],
+        "/SizeTrackingLambdaStack/SizeTrackingLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingLambda9C763A26"
+          }
+        ],
+        "/SizeTrackingLambdaStack/SizeTrackingLambda/SqsEventSource:SizeTrackingLambdaStackImportedSizeTrackingQueueA4B9AB08/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingLambdaSqsEventSourceSizeTrackingLambdaStackImportedSizeTrackingQueueA4B9AB08337AC269"
+          }
+        ],
+        "/SizeTrackingLambdaStack/LambdaFunctionName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaFunctionName"
+          }
+        ],
+        "/SizeTrackingLambdaStack/DynamoDBTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBTableName"
+          }
+        ],
+        "/SizeTrackingLambdaStack/SQSQueueUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SQSQueueUrl"
+          }
+        ],
+        "/SizeTrackingLambdaStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/SizeTrackingLambdaStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/SizeTrackingLambdaStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/SizeTrackingLambdaStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "SizeTrackingLambdaStack"
+    },
+    "ResourcesStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ResourcesStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ResourcesStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ResourcesStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "notificationArns": [],
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/bf9ecd1d65505138200efadab4381be9c1e3e627ab7298d5d5290af9fc3827a5.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ResourcesStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ResourcesStack.assets"
+      ],
+      "metadata": {
+        "/ResourcesStack/TMWTestBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TMWTestBucket12416E3A"
+          }
+        ],
+        "/ResourcesStack/TMWTestBucket/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TMWTestBucketNotificationsC70D2BFE"
+          }
+        ],
+        "/ResourcesStack/SNSTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SNSTopicBCCC5DD8"
+          }
+        ],
+        "/ResourcesStack/SNSTopic/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SNSTopicPolicyE1168CD7"
+          }
+        ],
+        "/ResourcesStack/SizeTrackingQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingQueue7EE021D2"
+          }
+        ],
+        "/ResourcesStack/SizeTrackingQueue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingQueuePolicyFF78ED6E"
+          }
+        ],
+        "/ResourcesStack/SizeTrackingQueue/ResourcesStackSNSTopicAF72E26D/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SizeTrackingQueueResourcesStackSNSTopicAF72E26D04233FEE"
+          }
+        ],
+        "/ResourcesStack/LoggingQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoggingQueue2008486F"
+          }
+        ],
+        "/ResourcesStack/LoggingQueue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoggingQueuePolicy511E6F5F"
+          }
+        ],
+        "/ResourcesStack/LoggingQueue/ResourcesStackSNSTopicAF72E26D/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoggingQueueResourcesStackSNSTopicAF72E26D219CA7F4"
+          }
+        ],
+        "/ResourcesStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+          }
+        ],
+        "/ResourcesStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
+          }
+        ],
+        "/ResourcesStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/ResourcesStack/S3ObjectSizeHistory": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "S3ObjectSizeHistory22F071F5"
+            }
+          }
+        ],
+        "/ResourcesStack/S3ObjectSizeHistory/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "S3ObjectSizeHistory22F071F5"
+          }
+        ],
+        "/ResourcesStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ResourcesStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ResourcesStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ResourcesStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ResourcesStack"
+    },
+    "LogLambdaStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "LogLambdaStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "LogLambdaStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "LogLambdaStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "notificationArns": [],
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/466aa5dd5690158481aff30e4f98568e6ce5568997e0c6800da20731a260000e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "LogLambdaStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "LogLambdaStack.assets"
+      ],
+      "metadata": {
+        "/LogLambdaStack/LogLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogLambdaServiceRole21BF1A8B"
+          }
+        ],
+        "/LogLambdaStack/LogLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogLambdaServiceRoleDefaultPolicyE47305AB"
+          }
+        ],
+        "/LogLambdaStack/LogLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogLambda61536674"
+          }
+        ],
+        "/LogLambdaStack/LogLambda/SqsEventSource:LogLambdaStackLogQueueB391C6C8/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogLambdaSqsEventSourceLogLambdaStackLogQueueB391C6C8AC45AA02"
+          }
+        ],
+        "/LogLambdaStack/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogGroupF5B46931"
+          }
+        ],
+        "/LogLambdaStack/LogStream/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogStreamCBF5916A"
+          }
+        ],
+        "/LogLambdaStack/ObjectSizeChangeMetricFilter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ObjectSizeChangeMetricFilter81DAA85A"
+          }
+        ],
+        "/LogLambdaStack/ObjectSizeThresholdAlarm/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ObjectSizeThresholdAlarm7C7E90CA"
+          }
+        ],
+        "/LogLambdaStack/LambdaFunctionName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaFunctionName"
+          }
+        ],
+        "/LogLambdaStack/LogGroupName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogGroupName"
+          }
+        ],
+        "/LogLambdaStack/LogStreamName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogStreamName"
+          }
+        ],
+        "/LogLambdaStack/CloudWatchAlarmName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudWatchAlarmName"
+          }
+        ],
+        "/LogLambdaStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/LogLambdaStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/LogLambdaStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/LogLambdaStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "LogLambdaStack"
+    },
+    "CleanerLambdaStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CleanerLambdaStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CleanerLambdaStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "CleanerLambdaStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "notificationArns": [],
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a3b5c5e24ab1ce9960e1500e56f06660703bd26bca4e5bfb69722779b05362a7.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CleanerLambdaStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CleanerLambdaStack.assets"
+      ],
+      "metadata": {
+        "/CleanerLambdaStack/CleanerLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CleanerLambdaServiceRole9F5C3FC0"
+          }
+        ],
+        "/CleanerLambdaStack/CleanerLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CleanerLambdaServiceRoleDefaultPolicy04CE099E"
+          }
+        ],
+        "/CleanerLambdaStack/CleanerLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CleanerLambdaADF65AF3"
+          }
+        ],
+        "/CleanerLambdaStack/CleanerLambda/MyAlarmAlarmPermission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CleanerLambdaMyAlarmAlarmPermissionF16659B7"
+          }
+        ],
+        "/CleanerLambdaStack/CleanerLambda/AllowCloudWatchInvoke": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CleanerLambdaAllowCloudWatchInvoke9EB02138"
+          }
+        ],
+        "/CleanerLambdaStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CleanerLambdaStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/CleanerLambdaStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CleanerLambdaStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CleanerLambdaStack"
     },
     "Tree": {
       "type": "cdk:tree",

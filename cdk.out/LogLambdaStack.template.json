@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "SizeTrackingLambdaServiceRoleEE707D62": {
+  "LogLambdaServiceRole21BF1A8B": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -27,54 +27,34 @@
         ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
        ]
       ]
-     },
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/AmazonDynamoDBFullAccess"
-       ]
-      ]
-     },
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/AmazonS3FullAccess"
-       ]
-      ]
-     },
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/AmazonSQSFullAccess"
-       ]
-      ]
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "SizeTrackingLambdaStack/SizeTrackingLambda/ServiceRole/Resource"
+    "aws:cdk:path": "LogLambdaStack/LogLambda/ServiceRole/Resource"
    }
   },
-  "SizeTrackingLambdaServiceRoleDefaultPolicy725C3475": {
+  "LogLambdaServiceRoleDefaultPolicyE47305AB": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
      "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:GetQueryResults",
+        "logs:PutLogEvents",
+        "logs:StartQuery",
+        "logs:StopQuery"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "LogGroupF5B46931",
+         "Arn"
+        ]
+       }
+      },
       {
        "Action": [
         "sqs:ChangeMessageVisibility",
@@ -84,77 +64,133 @@
         "sqs:ReceiveMessage"
        ],
        "Effect": "Allow",
-       "Resource": "arn:aws:sqs:us-east-1:445567102516:ResourcesStack-SizeTrackingQueue7EE021D2-JoVMYkHz56TC"
+       "Resource": "arn:aws:sqs:us-east-1:445567102516:ResourcesStack-LoggingQueue2008486F-d7tVOAkcDyai"
       }
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "SizeTrackingLambdaServiceRoleDefaultPolicy725C3475",
+    "PolicyName": "LogLambdaServiceRoleDefaultPolicyE47305AB",
     "Roles": [
      {
-      "Ref": "SizeTrackingLambdaServiceRoleEE707D62"
+      "Ref": "LogLambdaServiceRole21BF1A8B"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "SizeTrackingLambdaStack/SizeTrackingLambda/ServiceRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "LogLambdaStack/LogLambda/ServiceRole/DefaultPolicy/Resource"
    }
   },
-  "SizeTrackingLambda9C763A26": {
+  "LogLambda61536674": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "8de10c724320968c5f96cacf396375bf8f691574a9d7d82bb91ea4061b74b212.zip"
+     "S3Key": "2f988444f2f03d95f8431e4fd858eb10fc18ea398ac99ae2aa306737c4d13e35.zip"
     },
-    "Environment": {
-     "Variables": {
-      "DYNAMODB_TABLE_NAME": "cdk-S3-object-size-history"
-     }
-    },
-    "Handler": "size_tracking_lambda.lambda_handler",
+    "Handler": "log_lambda.lambda_handler",
+    "MemorySize": 128,
     "Role": {
      "Fn::GetAtt": [
-      "SizeTrackingLambdaServiceRoleEE707D62",
+      "LogLambdaServiceRole21BF1A8B",
       "Arn"
      ]
     },
     "Runtime": "python3.9",
-    "Timeout": 25
+    "Timeout": 30
    },
    "DependsOn": [
-    "SizeTrackingLambdaServiceRoleDefaultPolicy725C3475",
-    "SizeTrackingLambdaServiceRoleEE707D62"
+    "LogLambdaServiceRoleDefaultPolicyE47305AB",
+    "LogLambdaServiceRole21BF1A8B"
    ],
    "Metadata": {
-    "aws:cdk:path": "SizeTrackingLambdaStack/SizeTrackingLambda/Resource",
-    "aws:asset:path": "asset.8de10c724320968c5f96cacf396375bf8f691574a9d7d82bb91ea4061b74b212",
+    "aws:cdk:path": "LogLambdaStack/LogLambda/Resource",
+    "aws:asset:path": "asset.2f988444f2f03d95f8431e4fd858eb10fc18ea398ac99ae2aa306737c4d13e35",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "SizeTrackingLambdaSqsEventSourceSizeTrackingLambdaStackImportedSizeTrackingQueueA4B9AB08337AC269": {
+  "LogLambdaSqsEventSourceLogLambdaStackLogQueueB391C6C8AC45AA02": {
    "Type": "AWS::Lambda::EventSourceMapping",
    "Properties": {
     "BatchSize": 10,
-    "EventSourceArn": "arn:aws:sqs:us-east-1:445567102516:ResourcesStack-SizeTrackingQueue7EE021D2-JoVMYkHz56TC",
+    "EventSourceArn": "arn:aws:sqs:us-east-1:445567102516:ResourcesStack-LoggingQueue2008486F-d7tVOAkcDyai",
     "FunctionName": {
-     "Ref": "SizeTrackingLambda9C763A26"
+     "Ref": "LogLambda61536674"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "SizeTrackingLambdaStack/SizeTrackingLambda/SqsEventSource:SizeTrackingLambdaStackImportedSizeTrackingQueueA4B9AB08/Resource"
+    "aws:cdk:path": "LogLambdaStack/LogLambda/SqsEventSource:LogLambdaStackLogQueueB391C6C8/Resource"
+   }
+  },
+  "LogGroupF5B46931": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/lambda/s3_operation",
+    "RetentionInDays": 7
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "LogLambdaStack/LogGroup/Resource"
+   }
+  },
+  "LogStreamCBF5916A": {
+   "Type": "AWS::Logs::LogStream",
+   "Properties": {
+    "LogGroupName": {
+     "Ref": "LogGroupF5B46931"
+    },
+    "LogStreamName": "s3_log"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "LogLambdaStack/LogStream/Resource"
+   }
+  },
+  "ObjectSizeChangeMetricFilter81DAA85A": {
+   "Type": "AWS::Logs::MetricFilter",
+   "Properties": {
+    "FilterPattern": "{ $.size_delta = \"*\" }",
+    "LogGroupName": {
+     "Ref": "LogGroupF5B46931"
+    },
+    "MetricTransformations": [
+     {
+      "MetricName": "TotalObjectSize",
+      "MetricNamespace": "Assignment4App",
+      "MetricValue": "$.size_delta"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LogLambdaStack/ObjectSizeChangeMetricFilter/Resource"
+   }
+  },
+  "ObjectSizeThresholdAlarm7C7E90CA": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "TotalObjectSize",
+    "Namespace": "Assignment4App",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 20
+   },
+   "Metadata": {
+    "aws:cdk:path": "LogLambdaStack/ObjectSizeThresholdAlarm/Resource"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/2VOQU7DMBB8S+/O0hLBnUZwQ5SEe7Wxt8XEWYfumiqK8nfkBLhwmpmd0ezcwu7+DrYbvEphXVcE38LUKNrO4FWOkxsZ++haeMM20B6FjHwKvCZKqwrYtw5hekps1Uc21Yn/+OMXsTYxXSw94zB4Pmf7/3U2HnuY6hgoBxY8xODtmOXKZiPlEUVIBR4yGClhn2xHmofMpiZZOs3iNornn38vSYekS/FvpDpxFdn5vHI2h1HfI9+UsCthu/kQ74tLYvU9Qb3iN/yUipYnAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/2VQzW7CMAx+Fu7Bg1XbHdDYBTTWPgAyqSmhadLFzipU9d2nlA5N2un7sS378zMsX19gMcOO57qs59acoC8Eda2w42NvsTmVCP02Oi3GO7U5uwd/+yYnhY9B0x7b1rgqlf+7gzLYQJ97S6lhxIO3Rt+SvLNBcXZEZhKGVQLFGayjrknWyKSsrxj6na/eg49tmnvwna8KCYTN5E5iTxKM3horFFLlrx6Utj6WHYq+QL+yGMbhkQyKvxg+I0VKmweVE49p1HhXIVhNST+itFHGSL8tm7PbeFea9J9BHW5y8e4pg2UGi9mVjZmH6MQ0BPkdfwB500pdgAEAAA=="
    },
    "Metadata": {
-    "aws:cdk:path": "SizeTrackingLambdaStack/CDKMetadata/Default"
+    "aws:cdk:path": "LogLambdaStack/CDKMetadata/Default"
    },
    "Condition": "CDKMetadataAvailable"
   }
@@ -162,24 +198,20 @@
  "Outputs": {
   "LambdaFunctionName": {
    "Value": {
-    "Ref": "SizeTrackingLambda9C763A26"
+    "Ref": "LogLambda61536674"
    }
   },
-  "DynamoDBTableName": {
-   "Value": "cdk-S3-object-size-history"
-  },
-  "SQSQueueUrl": {
+  "LogGroupName": {
    "Value": {
-    "Fn::Join": [
-     "",
-     [
-      "https://sqs.us-east-1.",
-      {
-       "Ref": "AWS::URLSuffix"
-      },
-      "/445567102516/ResourcesStack-SizeTrackingQueue7EE021D2-JoVMYkHz56TC"
-     ]
-    ]
+    "Ref": "LogGroupF5B46931"
+   }
+  },
+  "LogStreamName": {
+   "Value": "s3_operations"
+  },
+  "CloudWatchAlarmName": {
+   "Value": {
+    "Ref": "ObjectSizeThresholdAlarm7C7E90CA"
    }
   }
  },
