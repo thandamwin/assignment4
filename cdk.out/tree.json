@@ -1,0 +1,781 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "DriverLambdaStack": {
+        "id": "DriverLambdaStack",
+        "path": "DriverLambdaStack",
+        "children": {
+          "ImportedS3Bucket": {
+            "id": "ImportedS3Bucket",
+            "path": "DriverLambdaStack/ImportedS3Bucket",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+              "version": "2.165.0"
+            }
+          },
+          "RequestsLayer": {
+            "id": "RequestsLayer",
+            "path": "DriverLambdaStack/RequestsLayer",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "DriverLambdaStack/RequestsLayer/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "DriverLambdaStack/RequestsLayer/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.165.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "DriverLambdaStack/RequestsLayer/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.165.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "DriverLambdaStack/RequestsLayer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                  "aws:cdk:cloudformation:props": {
+                    "compatibleRuntimes": [
+                      "python3.9"
+                    ],
+                    "content": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "82525c406b7d0f81980ccb719edba28c9d5493434f83e39474d302b7019298f9.zip"
+                    },
+                    "description": "A layer with requests library dependencies"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                  "version": "2.165.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+              "version": "2.165.0"
+            }
+          },
+          "DriverLambda": {
+            "id": "DriverLambda",
+            "path": "DriverLambdaStack/DriverLambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "DriverLambdaStack/DriverLambda/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "DriverLambdaStack/DriverLambda/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.165.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "DriverLambdaStack/DriverLambda/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AmazonS3FullAccess"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AmazonDynamoDBFullAccess"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.165.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "DriverLambdaStack/DriverLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "DriverLambdaStack/DriverLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.165.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "DriverLambdaStack/DriverLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.165.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "DriverLambdaStack/DriverLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "6e8a3e9adc288b31dad07e8a9a2bdc158297fdc254523ff196ce3e55b238fa02.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "S3_BUCKET_NAME": "cdk-tmw-testbucket",
+                        "PLOTTING_API_URL": "https://fo6l1i6y3b.execute-api.us-east-1.amazonaws.com/prod"
+                      }
+                    },
+                    "handler": "driver_lambda.lambda_handler",
+                    "layers": [
+                      {
+                        "Ref": "RequestsLayer58858B55"
+                      }
+                    ],
+                    "role": {
+                      "Fn::GetAtt": [
+                        "DriverLambdaServiceRoleB0E11A6F",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "python3.9",
+                    "timeout": 60
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.165.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.165.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "DriverLambdaStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "DriverLambdaStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.165.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "DriverLambdaStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.165.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "DriverLambdaStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.165.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "DriverLambdaStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.165.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.165.0"
+        }
+      },
+      "PlottingLambdaStack": {
+        "id": "PlottingLambdaStack",
+        "path": "PlottingLambdaStack",
+        "children": {
+          "ImportedDynamoDBTable": {
+            "id": "ImportedDynamoDBTable",
+            "path": "PlottingLambdaStack/ImportedDynamoDBTable",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_dynamodb.TableBase",
+              "version": "2.165.0"
+            }
+          },
+          "ImportedS3Bucket": {
+            "id": "ImportedS3Bucket",
+            "path": "PlottingLambdaStack/ImportedS3Bucket",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+              "version": "2.165.0"
+            }
+          },
+          "MatplotlibLayer": {
+            "id": "MatplotlibLayer",
+            "path": "PlottingLambdaStack/MatplotlibLayer",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.165.0"
+            }
+          },
+          "PlottingLambda": {
+            "id": "PlottingLambda",
+            "path": "PlottingLambdaStack/PlottingLambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "PlottingLambdaStack/PlottingLambda/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "PlottingLambdaStack/PlottingLambda/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.165.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "PlottingLambdaStack/PlottingLambda/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AmazonS3FullAccess"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AmazonDynamoDBFullAccess"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.165.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "PlottingLambdaStack/PlottingLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "PlottingLambdaStack/PlottingLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.165.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "PlottingLambdaStack/PlottingLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.165.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "PlottingLambdaStack/PlottingLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "c75262baf920474fb68d86342dd64cd6134c7a9bbee23742adccee50b9425eed.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "DYNAMODB_TABLE_NAME": "cdk-S3-object-size-history",
+                        "S3_BUCKET_NAME": "cdk-tmw-testbucket"
+                      }
+                    },
+                    "handler": "plotting_lambda.lambda_handler",
+                    "layers": [
+                      "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-p39-matplotlib:1"
+                    ],
+                    "role": {
+                      "Fn::GetAtt": [
+                        "PlottingLambdaServiceRole3977BEC1",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "python3.9",
+                    "timeout": 60
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.165.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.165.0"
+            }
+          },
+          "PlottingApi": {
+            "id": "PlottingApi",
+            "path": "PlottingLambdaStack/PlottingApi",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "PlottingLambdaStack/PlottingApi/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "API Gateway to trigger the Plotting Lambda",
+                    "name": "Plotting Service API"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.165.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "PlottingLambdaStack/PlottingApi/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "PlottingLambdaStack/PlottingApi/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "description": "API Gateway to trigger the Plotting Lambda",
+                        "restApiId": {
+                          "Ref": "PlottingApi7CA4E44C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.165.0"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "PlottingLambdaStack/PlottingApi/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "PlottingLambdaStack/PlottingApi/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "deploymentId": {
+                          "Ref": "PlottingApiDeploymentB1AB2FA2acf23a89be391e387fdd618b83bb37d5"
+                        },
+                        "restApiId": {
+                          "Ref": "PlottingApi7CA4E44C"
+                        },
+                        "stageName": "prod"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.165.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "PlottingLambdaStack/PlottingApi/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.165.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "PlottingLambdaStack/PlottingApi/Default",
+                "children": {
+                  "GET": {
+                    "id": "GET",
+                    "path": "PlottingLambdaStack/PlottingApi/Default/GET",
+                    "children": {
+                      "ApiPermission.PlottingLambdaStackPlottingApiB143200C.GET..": {
+                        "id": "ApiPermission.PlottingLambdaStackPlottingApiB143200C.GET..",
+                        "path": "PlottingLambdaStack/PlottingApi/Default/GET/ApiPermission.PlottingLambdaStackPlottingApiB143200C.GET..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "PlottingLambdaE0AD2309",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "PlottingApi7CA4E44C"
+                                  },
+                                  "/",
+                                  {
+                                    "Ref": "PlottingApiDeploymentStageprod0540CEA9"
+                                  },
+                                  "/GET/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.165.0"
+                        }
+                      },
+                      "ApiPermission.Test.PlottingLambdaStackPlottingApiB143200C.GET..": {
+                        "id": "ApiPermission.Test.PlottingLambdaStackPlottingApiB143200C.GET..",
+                        "path": "PlottingLambdaStack/PlottingApi/Default/GET/ApiPermission.Test.PlottingLambdaStackPlottingApiB143200C.GET..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "PlottingLambdaE0AD2309",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "PlottingApi7CA4E44C"
+                                  },
+                                  "/test-invoke-stage/GET/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.165.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "PlottingLambdaStack/PlottingApi/Default/GET/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                          "aws:cdk:cloudformation:props": {
+                            "authorizationType": "NONE",
+                            "httpMethod": "GET",
+                            "integration": {
+                              "type": "AWS_PROXY",
+                              "uri": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":apigateway:",
+                                    {
+                                      "Ref": "AWS::Region"
+                                    },
+                                    ":lambda:path/2015-03-31/functions/",
+                                    {
+                                      "Fn::GetAtt": [
+                                        "PlottingLambdaE0AD2309",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/invocations"
+                                  ]
+                                ]
+                              },
+                              "integrationHttpMethod": "POST"
+                            },
+                            "resourceId": {
+                              "Fn::GetAtt": [
+                                "PlottingApi7CA4E44C",
+                                "RootResourceId"
+                              ]
+                            },
+                            "restApiId": {
+                              "Ref": "PlottingApi7CA4E44C"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                          "version": "2.165.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                      "version": "2.165.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.165.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.LambdaRestApi",
+              "version": "2.165.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "PlottingLambdaStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "PlottingLambdaStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.165.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "PlottingLambdaStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.165.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "PlottingLambdaStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.165.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "PlottingLambdaStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.165.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.165.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.2"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.165.0"
+    }
+  }
+}
